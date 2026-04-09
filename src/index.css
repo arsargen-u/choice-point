@@ -7,6 +7,11 @@
     height: 100%;
   }
 
+  /* Allow bottom nav to sit above iOS home indicator */
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     @apply bg-stone-50 text-stone-800;
     -webkit-font-smoothing: antialiased;
@@ -57,4 +62,9 @@
   }
   .chat-prose strong { @apply font-semibold text-stone-800; }
   .chat-prose hr { @apply my-3; }
+
+  /* iOS safe area padding for mobile bottom nav */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }

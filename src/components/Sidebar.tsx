@@ -5,7 +5,7 @@ interface SidebarProps {
   onNavigate: (view: View) => void
 }
 
-const navItems: { id: View; label: string; icon: React.ReactNode; description: string }[] = [
+export const navItems: { id: View; label: string; icon: React.ReactNode; description: string }[] = [
   {
     id: 'chat',
     label: 'Chat',
@@ -53,7 +53,7 @@ const navItems: { id: View; label: string; icon: React.ReactNode; description: s
 
 export default function Sidebar({ currentView, onNavigate }: SidebarProps) {
   return (
-    <aside className="w-56 flex-shrink-0 bg-stone-100 border-r border-stone-200 flex flex-col">
+    <aside className="hidden md:flex w-56 flex-shrink-0 bg-stone-100 border-r border-stone-200 flex-col">
       {/* Logo */}
       <div className="px-5 pt-6 pb-5 border-b border-stone-200">
         <div className="flex items-center gap-2.5">

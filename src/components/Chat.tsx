@@ -172,13 +172,13 @@ export default function Chat({ values, pendingMessage, onPendingMessageConsumed 
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200 bg-white">
+      <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-stone-200 bg-white">
         <div>
           <h2 className="font-semibold text-stone-800">Conversation</h2>
           <p className="text-xs text-stone-400 mt-0.5">
             {values.length > 0
               ? `${values.length} value${values.length === 1 ? '' : 's'} loaded`
-              : 'Add values in the sidebar for richer guidance'}
+              : 'Add values for richer guidance'}
           </p>
         </div>
         {hasUserMessages && (
@@ -192,7 +192,7 @@ export default function Chat({ values, pendingMessage, onPendingMessageConsumed 
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+      <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 md:py-6 space-y-4 md:space-y-5">
         {messages.map((msg) => (
           <MessageBubble
             key={msg.id}
@@ -231,8 +231,8 @@ export default function Chat({ values, pendingMessage, onPendingMessageConsumed 
       </div>
 
       {/* Input area */}
-      <div className="border-t border-stone-200 bg-white px-6 py-4">
-        <div className="flex items-end gap-3">
+      <div className="border-t border-stone-200 bg-white px-3 md:px-6 py-3 md:py-4">
+        <div className="flex items-end gap-2 md:gap-3">
           <div className="flex-1 relative">
             <textarea
               ref={textareaRef}
@@ -242,8 +242,8 @@ export default function Chat({ values, pendingMessage, onPendingMessageConsumed 
               placeholder="What's on your mind…"
               rows={1}
               disabled={isStreaming}
-              className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-              style={{ minHeight: '48px', maxHeight: '160px' }}
+              className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50 px-3 md:px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ minHeight: '44px', maxHeight: '160px' }}
             />
           </div>
           <button
@@ -264,7 +264,7 @@ export default function Chat({ values, pendingMessage, onPendingMessageConsumed 
             )}
           </button>
         </div>
-        <p className="text-xs text-stone-400 mt-2 ml-1">
+        <p className="hidden md:block text-xs text-stone-400 mt-2 ml-1">
           Enter to send · Shift+Enter for new line
         </p>
       </div>
