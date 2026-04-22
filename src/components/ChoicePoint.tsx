@@ -6,6 +6,167 @@ interface ChoicePointProps {
   onSendToChat: (message: string) => void
 }
 
+function ChoicePointDiagram() {
+  return (
+    <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden mb-8">
+      <svg
+        viewBox="0 0 420 230"
+        className="w-full"
+        aria-label="Choice Point diagram: a V-shape with 'You Are Here' at the bottom, Away Moves to the upper-left, and Towards Your Values to the upper-right"
+      >
+        <defs>
+          {/* Away arrowhead */}
+          <marker
+            id="cp-arrow-away"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto"
+          >
+            <path d="M 0 1 L 9 5 L 0 9 z" fill="#d97706" />
+          </marker>
+          {/* Towards arrowhead */}
+          <marker
+            id="cp-arrow-towards"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto"
+          >
+            <path d="M 0 1 L 9 5 L 0 9 z" fill="#4a7c59" />
+          </marker>
+        </defs>
+
+        {/* Background zones */}
+        <polygon points="210,185 18,12 210,12" fill="#fffbeb" opacity="0.7" />
+        <polygon points="210,185 402,12 210,12" fill="#f0f7f4" opacity="0.7" />
+
+        {/* Away arm */}
+        <line
+          x1="205" y1="183"
+          x2="38" y2="26"
+          stroke="#d97706"
+          strokeWidth="3"
+          strokeLinecap="round"
+          markerEnd="url(#cp-arrow-away)"
+        />
+
+        {/* Towards arm */}
+        <line
+          x1="215" y1="183"
+          x2="382" y2="26"
+          stroke="#4a7c59"
+          strokeWidth="3"
+          strokeLinecap="round"
+          markerEnd="url(#cp-arrow-towards)"
+        />
+
+        {/* Center "You Are Here" pulse ring + dot */}
+        <circle cx="210" cy="186" r="14" fill="#f5f5f4" stroke="#e7e5e4" strokeWidth="2" />
+        <circle cx="210" cy="186" r="6" fill="#44403c" />
+
+        {/* YOU ARE HERE label */}
+        <text
+          x="210" y="213"
+          textAnchor="middle"
+          fontSize="9.5"
+          fontWeight="700"
+          fill="#78716c"
+          letterSpacing="1.5"
+          fontFamily="system-ui, sans-serif"
+        >
+          YOU ARE HERE
+        </text>
+
+        {/* ── AWAY label box ── */}
+        <rect x="8" y="8" width="82" height="34" rx="6" fill="#fef3c7" stroke="#fcd34d" strokeWidth="1.5" />
+        <text
+          x="49" y="22"
+          textAnchor="middle"
+          fontSize="12"
+          fontWeight="700"
+          fill="#b45309"
+          fontFamily="system-ui, sans-serif"
+        >
+          AWAY
+        </text>
+        <text
+          x="49" y="35"
+          textAnchor="middle"
+          fontSize="9"
+          fill="#92400e"
+          fontFamily="system-ui, sans-serif"
+        >
+          from values
+        </text>
+
+        {/* ── TOWARDS label box ── */}
+        <rect x="330" y="8" width="82" height="34" rx="6" fill="#ecf5f0" stroke="#86b89a" strokeWidth="1.5" />
+        <text
+          x="371" y="22"
+          textAnchor="middle"
+          fontSize="12"
+          fontWeight="700"
+          fill="#2d6a4f"
+          fontFamily="system-ui, sans-serif"
+        >
+          TOWARDS
+        </text>
+        <text
+          x="371" y="35"
+          textAnchor="middle"
+          fontSize="9"
+          fill="#2d6a4f"
+          fontFamily="system-ui, sans-serif"
+        >
+          your values
+        </text>
+
+        {/* ── Hooks annotation ── sits just inside the left arm */}
+        <rect x="58" y="96" width="72" height="38" rx="8"
+          fill="white" stroke="#fca5a5" strokeWidth="1.5"
+          strokeDasharray="4 2"
+        />
+        {/* Hook symbol */}
+        <text x="73" y="114" fontSize="14" fontFamily="system-ui, sans-serif">🪝</text>
+        <text
+          x="103" y="111"
+          textAnchor="middle"
+          fontSize="9.5"
+          fontWeight="600"
+          fill="#b45309"
+          fontFamily="system-ui, sans-serif"
+        >
+          hooks
+        </text>
+        <text
+          x="103" y="123"
+          textAnchor="middle"
+          fontSize="8.5"
+          fill="#92400e"
+          fontFamily="system-ui, sans-serif"
+        >
+          pull here
+        </text>
+
+        {/* Small arrow from hooks bubble toward away arm */}
+        <path
+          d="M 130 115 L 148 120"
+          stroke="#f87171"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          markerEnd="url(#cp-arrow-away)"
+          opacity="0.6"
+        />
+      </svg>
+    </div>
+  )
+}
+
 export default function ChoicePoint({ values, onSendToChat }: ChoicePointProps) {
   const [situation, setSituation] = useState('')
   const [hooks, setHooks] = useState('')
@@ -40,14 +201,17 @@ export default function ChoicePoint({ values, onSendToChat }: ChoicePointProps) 
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="max-w-3xl mx-auto px-8 py-8">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-6 md:py-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h2 className="text-2xl font-semibold text-stone-800">Choice Point</h2>
           <p className="text-stone-500 mt-1.5 leading-relaxed max-w-xl">
             Any moment of difficulty is a choice point. You can move <strong>towards</strong> your values, or <strong>away</strong> from discomfort. This tool helps you see that choice more clearly.
           </p>
         </div>
+
+        {/* V Diagram */}
+        <ChoicePointDiagram />
 
         {/* Situation */}
         <div className="mb-8">
@@ -70,9 +234,7 @@ export default function ChoicePoint({ values, onSendToChat }: ChoicePointProps) 
         <div className="mb-8 bg-red-50 border border-red-100 rounded-2xl p-5">
           <div className="flex items-start gap-3 mb-3">
             <div className="w-7 h-7 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 text-red-500">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M20 12V8a4 4 0 00-4-4H8a4 4 0 00-4 4v4m0 0v4a4 4 0 004 4h8a4 4 0 004-4v-4m-16 0h16" />
-              </svg>
+              <span className="text-base leading-none">🪝</span>
             </div>
             <div>
               <h3 className="font-semibold text-stone-700 text-sm">Hooks</h3>
@@ -91,7 +253,7 @@ export default function ChoicePoint({ values, onSendToChat }: ChoicePointProps) 
         </div>
 
         {/* Two columns: Away / Towards */}
-        <div className="grid grid-cols-2 gap-5 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
           {/* Away moves */}
           <div className="bg-amber-50 border border-amber-100 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
