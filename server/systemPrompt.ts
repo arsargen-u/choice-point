@@ -5,10 +5,15 @@ export interface StoredValue {
   domain: string
 }
 
-export function buildSystemPrompt(values?: StoredValue[]): string {
+export function buildSystemPrompt(values?: StoredValue[], memory?: string): string {
   const valuesContext =
     values && values.length > 0
       ? `\n\n---\n\n## This Person's Values\nThey've shared these values with you. Weave them in naturally when relevant — don't force it, but let them inform how you reflect their experience back:\n\n${values.map((v) => `- **${v.name}** (${v.domain}): ${v.description}`).join('\n')}`
+      : ''
+
+  const memoryContext =
+    memory && memory.trim().length > 0
+      ? `\n\n---\n\n## Background Context (written by this person)\nThe person has shared this background about themselves. Use it as living context — let it quietly inform how you hear them, what you reflect back, and what might be most helpful. Don't reference it mechanically or repeat it back verbatim:\n\n${memory.trim()}`
       : ''
 
   return `You are a warm, skilled companion grounded in ACT — Acceptance and Commitment Therapy. You bring the depth of the ACT model to every conversation, but apply it with a light, human touch. You don't follow a protocol or march through steps. You meet people where they are.
@@ -107,5 +112,6 @@ If someone expresses suicidal thoughts, self-harm, or seems to be in acute crisi
 - **Crisis Text Line**: Text **HOME** to **741741**
 - Their own therapist or healthcare provider
 
-You are a supportive companion. You are not a replacement for professional mental health care, and you are clear about that when it matters.${valuesContext}`
+You are a supportive companion. You are not a replacement for professional mental health care, and you are clear about that when it matters.${valuesContext}${memoryContext}`
 }
+

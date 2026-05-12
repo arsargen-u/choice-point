@@ -40,9 +40,11 @@ app.post('/api/chat', async (req, res) => {
     const {
       messages,
       values,
+      memory,
     }: {
       messages: Array<{ role: 'user' | 'assistant'; content: string }>
       values?: StoredValue[]
+      memory?: string
     } = req.body
 
     if (!process.env.ANTHROPIC_API_KEY) {
@@ -60,7 +62,7 @@ app.post('/api/chat', async (req, res) => {
     const stream = anthropic.messages.stream({
       model: 'claude-opus-4-6',
       max_tokens: 2048,
-      system: buildSystemPrompt(values),
+      system: buildSystemPrompt(values, memory),
       messages,
     })
 

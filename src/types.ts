@@ -26,7 +26,19 @@ export interface Value {
   createdAt: string
 }
 
-export type View = 'chat' | 'values' | 'choicepoint' | 'matrix'
+export type View = 'chat' | 'values' | 'choicepoint' | 'matrix' | 'memory'
+
+export interface Conversation {
+  id: string
+  title: string
+  savedAt: string
+  messages: Array<{
+    id: string
+    role: 'user' | 'assistant'
+    content: string
+    timestamp: string
+  }>
+}
 
 export interface ChoicePointData {
   situation: string

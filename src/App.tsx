@@ -4,17 +4,28 @@ import Chat from './components/Chat'
 import ValuesManager from './components/ValuesManager'
 import ChoicePoint from './components/ChoicePoint'
 import ACTMatrix from './components/ACTMatrix'
+import MemoryEditor from './components/MemoryEditor'
 import { useLocalStorage } from './hooks/useLocalStorage'
-import type { View, Value } from './types'
+import type { View, Value, Conversation } from './types'
 
 function App() {
   const [view, setView] = useState<View>('chat')
   const [values, setValues] = useLocalStorage<Value[]>('act-values', [])
+  const [userMemory, setUserMemory] = useLocalStorage<string>('act-memory', '')
+  const [savedConversations, setSavedConversations] = useLocalStorage<Conversation[]>('act-conversations', [])
   const [pendingMessage, setPendingMessage] = useState<string | null>(null)
 
   const sendToChat = (message: string) => {
     setPendingMessage(message)
     setView('chat')
+  }
+
+  const handleSaveConversation = (conv: Conversation) => {
+    setSavedConversations((prev) => [conv, ...prev])
+  }
+
+  const handleDeleteConversation = (id: string) => {
+    setSavedConversations((prev) => prev.filter((c) => c.id !== id))
   }
 
   return (
@@ -28,6 +39,10 @@ function App() {
             values={values}
             pendingMessage={pendingMessage}
             onPendingMessageConsumed={() => setPendingMessage(null)}
+            userMemory={userMemory}
+            savedConversations={savedConversations}
+            onSaveConversation={handleSaveConversation}
+            onDeleteConversation={handleDeleteConversation}
           />
         )}
         {view === 'values' && (
@@ -38,6 +53,9 @@ function App() {
         )}
         {view === 'matrix' && (
           <ACTMatrix values={values} onSendToChat={sendToChat} />
+        )}
+        {view === 'memory' && (
+          <MemoryEditor memory={userMemory} onChange={setUserMemory} />
         )}
       </main>
 
